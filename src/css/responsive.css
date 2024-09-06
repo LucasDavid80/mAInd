@@ -1,0 +1,92 @@
+/* RESPONSIVE */
+@media (min-width: 1024px) {
+    /* Doenças */
+
+    .Mensagens { 
+        width: 100%;
+    } 
+
+    .Campo {
+        width: 88%;
+    }
+
+    /* Fim do Doenças */
+}
+
+@media (max-width: 768px) {
+
+    /* Index */
+    .slogan {
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .texto-butao {
+        font-size: 24px;
+    }
+
+    /* Fim do Index */
+
+    /* Doenças */
+    .Chat-conversas {
+        padding: 12px 18px;
+    }
+
+    .Maind {
+        font-size: 36px;
+    }
+
+    .Mensagens {
+        padding: 0px 0px;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .Titulo {
+        font-size: 18px;
+    }
+
+    .Subtitulo {
+        font-size: 14px;
+    }
+
+    .text-mensage {
+        font-size: 12px;
+    }
+
+    /* Fim do Doenças */
+
+}
+
+@media (max-width: 425px) {
+    /* Menu */
+    .Menu{
+        padding: 8px 4px;
+    }
+
+    .Icone-menu {
+        width: 28px;
+        height: 28px;
+    }
+
+    .text-menu{
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    /* Fim do Menu */
+
+    /* Doenças */
+    .Chat-conversas{
+        padding: 12px 12px;
+    }
+
+    .Mensagens{
+        width: 100%;
+    }
+
+    .Maind{
+        font-size: 28px;
+    }
+    /* Fim de Doenças */
+}

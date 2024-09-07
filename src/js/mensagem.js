@@ -1,10 +1,7 @@
 let opacidadeLogo = 1;
 const bottomSend = document.querySelector('.Enviar');
-let conversas = [];
-let conversaInicialda = false;
-
-// const mensagemBoasVindas = "Olá, sou Maind sua ia para doenças mentais, pode me responder algumas perguntas (Lembrando que eu não substituo um profissional)?";
-// const mensagemIa = "Olá, tudo bem??";
+let conversaIniciada = false;
+let userId = null; // Para armazenar o ID do usuário
 
 function pegarTextoInput() {
     let conteudoMensagem = document.querySelector('.input-mensagem');
@@ -17,6 +14,11 @@ function apagarInput() {
 }
 
 function EnviarMsg() {
+    if (!conversaIniciada) {
+        conversaIniciada = true;
+        iniciarConversa();
+    }
+
     let msg = pegarTextoInput();
     criarMensagemUsuario(msg);
     diminuirOpacidade();
@@ -33,10 +35,8 @@ bottomSend.addEventListener('click', () => {
     EnviarMsg();
 });
 
-
 // Add tag HTML
 function criarMensagemUsuario(descricao) {
-    // Criar um novo elemento
     var novoElemento = document.createElement("div");
     novoElemento.classList.add('Mensagem-usuario');
     novoElemento.innerHTML = `
@@ -45,12 +45,9 @@ function criarMensagemUsuario(descricao) {
         </div>
     `;
 
-    // Selecionar o elemento pai onde o novo elemento será adicionado
     var elementoPai = document.getElementById("Conteudo");
-
-    // Adicionar o novo elemento ao final do elemento pai
     elementoPai.appendChild(novoElemento);
-    adicionarMensagem("Usuário", descricao);
+    adicionarMensagem("Usuário", descricao.toLowerCase());
     apagarInput();
 }
 
@@ -61,7 +58,6 @@ function sleep(ms) {
 
 // Função modificada para incluir um atraso de 3 segundos
 async function criarMensagemIa(descricao) {
-    // Criar um novo elemento
     var novoElemento = document.createElement("div");
     novoElemento.classList.add('Mensagem');
     novoElemento.innerHTML = `
@@ -72,18 +68,11 @@ async function criarMensagemIa(descricao) {
         </div>
     `;
 
-    // Aguardar 3 segundos (3000 milissegundos)
     await sleep(1200);
-
-    // Selecionar o elemento pai onde o novo elemento será adicionado
     var elementoPai = document.getElementById("Conteudo");
-
-    // Adicionar o novo elemento ao final do elemento pai
     elementoPai.appendChild(novoElemento);
     adicionarMensagem("mAInd", descricao);
-    conversaInicialda = true;
 }
-
 
 function diminuirOpacidade() {
     let elemento = document.getElementById('logo');
@@ -97,11 +86,6 @@ function diminuirOpacidade() {
             elemento.style.opacity = opacidadeLogo;
         }
     }, 50);
-
-    // if (!conversaInicialda) {
-    //     criarMensagemIa(mensagemBoasVindas);
-    // }
-
 }
 
 function adicionarMensagem(remetente, mensagem) {
@@ -110,31 +94,54 @@ function adicionarMensagem(remetente, mensagem) {
         mensagem: mensagem,
         timestamp: new Date().toISOString()
     };
+
     conversas.push(novaMensagem);
     if (remetente.includes("Usuário")) {
         resposta(mensagem);
     }
-    // window.scrollTo(0, document.body.scrollHeight);
-    // Move a barra de rolagem para a última mensagem
     const chatContainer = document.getElementById('conversas-container');
     chatContainer.scrollTop = chatContainer.scrollHeight;
-    console.log('Conversas:', conversas);
 }
 
 function resposta(respostaUsuario) {
-
     enviarResposta(respostaUsuario);
-
 }
 
-function enviarResposta(resposta) {
+let urlAPI = 'https://reliable-youthfulness-production.up.railway.app/mAInd';
+let urlTeste = 'http://127.0.0.1:5000/mAInd';
+// Função para iniciar a conversa e obter o user_id
+function iniciarConversa() {
+    fetch(`${urlTeste}/start`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            userId = data.user_id; // Armazena o user_id retornado
+            criarMensagemIa(data.response_text); // Mostra a primeira pergunta
+            console.log('Conversa iniciada, user_id:', userId);
+            conversas.unshift({ 'id': userId });
+        })
+        .catch(error => console.error('Erro ao iniciar conversa:', error));
+}
 
-    fetch('https://reliable-youthfulness-production.up.railway.app/mAInd', {
+
+// Função para enviar respostas, agora incluindo o user_id
+function enviarResposta(resposta) {
+    if (!userId) {
+        console.error('Conversa não iniciada. user_id não encontrado.');
+        return;
+    }
+
+    fetch(urlTeste, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            user_id: userId,  // Inclui o user_id na requisição
             text_mensage: resposta
         }),
     })
@@ -146,5 +153,5 @@ function enviarResposta(resposta) {
         .catch(error => console.error('Error:', error));
 }
 
-
-
+// Iniciar conversa automaticamente ao carregar a página ou iniciar uma ação específica
+// window.onload = iniciarConversa;

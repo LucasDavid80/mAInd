@@ -76,16 +76,12 @@ function addElementos(descricao) {
 }
 
 function alterarSrcImagemComBaseNoTitulo() {
-    console.log("ENTROUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!!!!!!!!");
     const url = window.location.href;
     const partes = url.replace('.html', '').split('/');
     const novoSrc = `../src/icons/${partes[partes.length - 1]}-ativo.svg`;
-    console.log('src: ', novoSrc);
 
     const icons = document.querySelectorAll('.icon-img');
-    console.log("Icons: ", icons)
     icons.forEach((icon) => {
-        console.log('Icon: ', icon);
         if (icon.src.includes(partes[partes.length - 1])) {
             icon.src = novoSrc;
         }

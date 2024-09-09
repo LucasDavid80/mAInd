@@ -2,6 +2,7 @@ let opacidadeLogo = 1;
 const bottomSend = document.querySelector('.Enviar');
 let conversaIniciada = false;
 let userId = null; // Para armazenar o ID do usuário
+let conversas = [];
 
 function pegarTextoInput() {
     let conteudoMensagem = document.querySelector('.input-mensagem');
@@ -111,7 +112,7 @@ let urlAPI = 'https://reliable-youthfulness-production.up.railway.app/mAInd';
 let urlTeste = 'http://127.0.0.1:5000/mAInd';
 // Função para iniciar a conversa e obter o user_id
 function iniciarConversa() {
-    fetch(`${urlAPI}/start`, {
+    fetch(`${urlTeste}/start`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ function enviarResposta(resposta) {
         return;
     }
 
-    fetch(urlAPI, {
+    fetch(urlTeste, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

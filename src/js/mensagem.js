@@ -128,7 +128,6 @@ function iniciarConversa() {
         .catch(error => console.error('Erro ao iniciar conversa:', error));
 }
 
-
 // Função para enviar respostas, agora incluindo o user_id
 function enviarResposta(resposta) {
     if (!userId) {

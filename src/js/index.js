@@ -1,3 +1,6 @@
+let botaoMenu = false;
+const textoLinks = ['Chat', 'Ansiedade', 'Depressão', 'Estresse', 'Solidão', 'Help', 'Settings'];
+
 document.addEventListener('DOMContentLoaded', function () {
     fetch('menu.html')
         .then(response => response.text())
@@ -19,15 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
-let botaoMenu = false;
-const textoLinks = ['Chat', 'Ansiedade', 'Depressão', 'Estresse', 'Solidão', 'Help', 'Settings'];
 
 // window.onload = alterarSrcImagemComBaseNoTitulo;
+var campo = document.querySelector('.Campo');
 
 function mostrarMenu() {
     botaoMenu = false;
     const iconMenu = document.querySelector('.Icone-menu');
     iconMenu.classList.add('ativo');
+
+    campo.style.width = '80%';
 
     // Voltar os textos do menu
     textoLinks.forEach((texto) => {
@@ -44,6 +48,8 @@ function esconderMenu(textoLinks) {
     botaoMenu = true;
     const iconMenu = document.querySelector('.Icone-menu');
     iconMenu.classList.remove('ativo');
+
+    campo.style.width = '88.7%';
 
     const textMenu = document.querySelectorAll('.text-menu');
     textMenu.forEach((texto) => {

@@ -157,6 +157,11 @@
         left: 50px;
     }
     /* Fim do Chat */
+    /* Index */
+    .slogan{
+        text-align: center;
+    }
+    /* Fim do Index */
 }
 
 @media(max-width: 320px){
